@@ -11,7 +11,7 @@ targetCompatibility = 1.7
 apply plugin: 'application'
 mainClassName = 'org.ros.RosRun'
 
-group = 'org.ros'
+group = 'org.ros.rosjava'
 
 defaultTasks 'install'
 
@@ -40,7 +40,7 @@ buildscript {
 }
 
 allprojects {
-    group = 'org.ros'
+    group = 'org.ros.rosjava'
     version = project.catkin.pkg.version
 }
 
