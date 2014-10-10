@@ -1,0 +1,3 @@
+//force project name
+//this is needed because repository contains multipackage and cause problem with release
+rootProject.name = 'rosjava_dynamic_reconfigure'
