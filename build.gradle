@@ -16,26 +16,36 @@ group = 'org.ros.rosjava'
 defaultTasks 'install'
 
 buildscript {
-	def rosMavenPath = "$System.env.ROS_MAVEN_PATH".split(':').collect { 'file://' + it }
-    def rosMavenRepository = "$System.env.ROS_MAVEN_REPOSITORY"
-    
-    if ( rosMavenRepository == 'null' ) {
-        rosMavenRepository = "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
-    }
-    
+    String rosMavenPath = System.getenv("ROS_MAVEN_PATH")
+    String rosMavenRepository = System.getenv("ROS_MAVEN_REPOSITORY")
     repositories {
-        rosMavenPath.each { p ->
-            maven {
-                url p
+        if (rosMavenPath != null) {
+            rosMavenPath.tokenize(":").each { path ->
+                maven {
+                    // We can't use uri() here because we aren't running inside something
+                    // that implements the Script interface.
+                    url "file:${path}"
+                }
             }
         }
-        mavenLocal()
         maven {
-            url rosMavenRepository
+            url "http://repository.springsource.com/maven/bundles/release"
         }
+        maven {
+            url "http://repository.springsource.com/maven/bundles/external"
+        }
+        if (rosMavenRepository != null) {
+            maven {
+                url rosMavenRepository
+            }
+        }
+        maven {
+            url "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
+        }
+        mavenCentral()
     }
     dependencies {
-        classpath group: 'org.ros.rosjava_bootstrap', name: 'gradle_plugins', version: '0.1.20'
+        classpath "org.ros.rosjava_bootstrap:gradle_plugins:[0.2,0.3)"
     }
 }
 
@@ -45,6 +55,6 @@ allprojects {
 }
 
 dependencies {
-  compile 'org.ros.rosjava_core:rosjava:[0,)'
-  compile 'org.ros.rosjava_messages:dynamic_reconfigure:[0,)'
+    compile 'org.ros.rosjava_core:rosjava:[0,)'
+    compile 'org.ros.rosjava_messages:dynamic_reconfigure:[0,)'
 }
