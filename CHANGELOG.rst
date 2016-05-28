@@ -2,8 +2,8 @@
 Changelog for package rosjava_dynamic_reconfigure
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.4 (2016-05-28)
+------------------
 * Clean code
 * Update package file description
 * Update gradle & dependencies

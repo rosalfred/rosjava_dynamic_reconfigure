@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rosjava_dynamic_reconfigure</name>
-  <version>0.2.3</version>
+  <version>0.2.4</version>
   <description>The rosjava_dynamic_reconfigure package</description>
 
   <maintainer email="mick.gaillard@gmail.com">Mickaël Gaillard</maintainer>
