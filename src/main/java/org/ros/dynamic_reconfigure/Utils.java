@@ -32,23 +32,23 @@ import dynamic_reconfigure.StrParameter;
 /**
  * Factory of Dynamic reconfigure message (for description and config).
  * Description is structural of current config message.
- * 
+ *
  * @author mick.gaillard@gmail.com (Mickael Gaillard)
  */
 public class Utils {
 
-    private static final String GROUP_DEFAULT   = "Default";
-    private static final String TYPE_INT        = "int";
-    private static final String TYPE_BOOL       = "bool";
-    private static final String TYPE_STR        = "str";
-    private static final String TYPE_DBL        = "double";
+    public static final String GROUP_DEFAULT   = "Default";
+    public static final String TYPE_INT        = "int";
+    public static final String TYPE_BOOL       = "bool";
+    public static final String TYPE_STR        = "str";
+    public static final String TYPE_DBL        = "double";
 
     private MessageFactory factory;
     private ConfigDescription descConfig;
     private Config updateConfig;
     private final Group defaultGroup;
     private final GroupState activeGroupState;
-    
+
     public Utils(ConnectedNode node, Config currentUpdateConfig) {
         this.updateConfig = currentUpdateConfig;
         this.factory = node.getTopicMessageFactory();
@@ -59,18 +59,18 @@ public class Utils {
         this.defaultGroup.setId(0);
         this.defaultGroup.setName(GROUP_DEFAULT);
         this.descConfig.getGroups().add(this.defaultGroup);
-        
+
         // GroupState
         this.activeGroupState = this.factory.newFromType(GroupState._TYPE);
         this.activeGroupState.setId(0);
         this.activeGroupState.setName(GROUP_DEFAULT);
         this.activeGroupState.setState(true);
     }
-    
+
     public void updateField(String name, String type, String value) {
         Utils.encodeConfig(this.factory, name, type, value, this.updateConfig);
     }
-    
+
     /**
      * Add fields to config (description).
      * @param name : name of the parameter
@@ -82,12 +82,12 @@ public class Utils {
      * @param maxValue : Maximum value of the parameter
      */
     public void addField(
-            String name, 
-            String type, 
-            int level, 
-            String description, 
-            Object defaultValue, 
-            int minValue, 
+            String name,
+            String type,
+            int level,
+            String description,
+            Object defaultValue,
+            int minValue,
             int maxValue) {
 
         ParamDescription descParam = null;
@@ -110,38 +110,38 @@ public class Utils {
 
         // Update Description message
         Utils.encodeConfig(
-                this.factory, 
-                name, 
-                type, 
-                defaultValue, 
+                this.factory,
+                name,
+                type,
+                defaultValue,
                 this.descConfig.getDflt());
         Utils.encodeConfig(
-                this.factory, 
-                name, 
-                "int", 
-                minValue, 
+                this.factory,
+                name,
+                "int",
+                minValue,
                 this.descConfig.getMin());
         Utils.encodeConfig(
-                this.factory, 
-                name, 
-                "int", 
-                maxValue, 
+                this.factory,
+                name,
+                "int",
+                maxValue,
                 this.descConfig.getMax());
         // TODO group case...
-        
+
         // Update Current config message
         Utils.encodeConfig(
-                this.factory, 
-                name, 
-                type, 
-                defaultValue, 
+                this.factory,
+                name,
+                type,
+                defaultValue,
                 this.updateConfig);
     }
-    
+
     public ConfigDescription makeConfigDescription() {
         return this.descConfig;
     }
-    
+
     public Config makeConfigUpdate() {
         return this.updateConfig;
     }
@@ -174,7 +174,7 @@ public class Utils {
             }
 
             defaultParam.setValue((Integer)value);
-            
+
         } else
 
         if (TYPE_BOOL.equals(type)) {
